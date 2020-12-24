@@ -8,7 +8,7 @@ jobs:
 
     steps:
     - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+      run: echo "Hello"
       
     - name: Slack
       uses: 8398a7/action-slack@v3
@@ -19,9 +19,9 @@ jobs:
           {
             attachments: [{
               color: 'good',
-              # text: `Success: ${{github.event.pusher.name}}'s workflow (${{github.workflow}}) in <${{github.event.repository.url}}|${{github.repository}}> (${{github.ref}}) \n- ${{github.event.head_commit.message}} (<${{github.event.head_commit.url}}|${{github.event.head_commit.id}}>)`,
               text: `Branch ${{github.ref}} has been deployed.`
             }]
           }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      if: always()  
