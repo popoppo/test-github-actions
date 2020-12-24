@@ -8,7 +8,7 @@ jobs:
 
     steps:
     - name: Send greeting
-      run: echo "Hello"
+      run: echo "Hello ${{github.event}}"
       
     - name: Slack
       uses: 8398a7/action-slack@v3
@@ -19,7 +19,7 @@ jobs:
           {
             attachments: [{
               color: 'good',
-              text: `Branch ${{github.ref}} has been deployed.`
+              text: `Branch ${{github.ref}} has been deployed. ${GITHUB_REF} ${{GITHUB_REF}}`
             }]
           }
       env:
