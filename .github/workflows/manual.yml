@@ -20,7 +20,7 @@ jobs:
             attachments: [{
               title: 'Result'
               color: 'good',
-              text: `Branch ${{github.ref}} has been deployed. ${{ process.env.GITHUB_REF }}`
+              text: `Branch ${{github.ref}} has been deployed. ${{ process.env.github_ref }}`
             }]
           }
       env:
