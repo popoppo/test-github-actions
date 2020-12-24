@@ -1,6 +1,6 @@
 name: Manual workflow
 
-on: push
+on: workflow_dispatch # push
 
 jobs:
   greet:
