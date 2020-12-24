@@ -19,9 +19,10 @@ jobs:
           {
             attachments: [{
               color: 'good',
-              text: `Success: workflow (${{github.workflow}}) in <${{github.event.repository.url}}|${{github.repository}}> (${{github.ref}}) \n`
+              text: `Success: workflow (${{github.workflow}}) in <${{github.event.repository.url}}|${{github.repository}}> (${{github.ref}}) ${{github.env.branch_name}} ${{github.job.env.branch_name}} ${{github.step.env.branch_name}}\n`
             }]
           }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        BRANCH_NAME: ${GITHUB_REF##*/}
       if: always()  
