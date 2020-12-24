@@ -20,7 +20,7 @@ jobs:
             attachments: [{
               title: 'Result'
               color: 'good',
-              text: `Branch ${{github.ref}} has been deployed. ${ process.env.GITHUB_REF }`
+              text: `Success: ${{github.event.pusher.name}}'s workflow (${{github.workflow}}) in <${{github.event.repository.url}}|${{github.repository}}> (${{github.ref}}) \n- ${{github.event.head_commit.message}} (<${{github.event.head_commit.url}}|${{github.event.head_commit.id}}>)`,
             }]
           }
       env:
