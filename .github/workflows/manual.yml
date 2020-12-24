@@ -1,6 +1,6 @@
 name: Manual workflow
 
-on: workflow_dispatch
+on: push
 
 jobs:
   greet:
@@ -19,7 +19,7 @@ jobs:
           {
             attachments: [{
               color: 'good',
-              text: `Branch ${{github.ref}} has been deployed. ${GITHUB_REF} ${{GITHUB_REF}}`
+              text: `Branch ${{github.ref}} has been deployed. $GITHUB_REF ${{GITHUB_REF}}`
             }]
           }
       env:
