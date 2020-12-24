@@ -7,9 +7,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Send greeting
-      run: echo "Hello"
-      
+    - name: Dump GitHub context
+      env:
+        ENV_CONTEXT: ${{ toJson(env) }}
+      run: echo "$ENV_CONTEXT"      
+
     - name: Slack
       uses: 8398a7/action-slack@v3
       with:
@@ -19,7 +21,7 @@ jobs:
           {
             attachments: [{
               color: 'good',
-              text: `Success: workflow (${{github.workflow}}) in <${{github.event.repository.url}}|${{github.repository}}> (${{github.ref}}) ${{github.env.branch_name}} ${{github.job.env.branch_name}} ${{github.step.env.branch_name}}\n`
+              text: `Success: ${{github.event.pusher.name}}'s workflow (${{github.workflow}}) in <${{github.event.repository.url}}|${{github.repository}}> (${{github.ref}}) \n- ${{github.event.head_commit.message}} (<${{github.event.head_commit.url}}|${{github.event.head_commit.id}}>)`
             }]
           }
       env:
