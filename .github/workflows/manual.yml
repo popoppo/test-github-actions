@@ -1,0 +1,27 @@
+name: Manual workflow
+
+on: workflow_dispatch
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send greeting
+      run: echo "Hello ${{ github.event.inputs.name }}"
+      
+    - name: Slack
+      uses: 8398a7/action-slack@v3
+      with:
+        status: custom
+        fields: repo,job,commit,ref
+        custom_payload: |
+          {
+            attachments: [{
+              color: 'good',
+              # text: `Success: ${{github.event.pusher.name}}'s workflow (${{github.workflow}}) in <${{github.event.repository.url}}|${{github.repository}}> (${{github.ref}}) \n- ${{github.event.head_commit.message}} (<${{github.event.head_commit.url}}|${{github.event.head_commit.id}}>)`,
+              text: `Branch ${{github.ref}} has been deployed.`
+            }]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
