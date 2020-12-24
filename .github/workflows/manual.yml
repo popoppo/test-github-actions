@@ -19,6 +19,7 @@ jobs:
         fields: repo,job,commit,ref
         custom_payload: |
           {
+            username: '${{github.actor}}',
             icon_emoji: ':recycle:',
             attachments: [{
               color: 'good',
