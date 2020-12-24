@@ -9,8 +9,8 @@ jobs:
     steps:
     - name: Dump GitHub context
       env:
-        ENV_CONTEXT: ${{ toJson(env) }}
-      run: echo "$ENV_CONTEXT"      
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"      
 
     - name: Slack
       uses: 8398a7/action-slack@v3
@@ -19,9 +19,10 @@ jobs:
         fields: repo,job,commit,ref
         custom_payload: |
           {
+            icon_emoji: ':recycle:',
             attachments: [{
               color: 'good',
-              text: `Success: ${{github.event.pusher.name}}'s workflow (${{github.workflow}}) in <${{github.event.repository.url}}|${{github.repository}}> (${{github.ref}}) \n- ${{github.event.head_commit.message}} (<${{github.event.head_commit.url}}|${{github.event.head_commit.id}}>)`
+              text: `Staging env is updated with ${{github.ref}} by ${{github.actor}}\nvia ${{github.workflow}} in <${{github.event.repository.url}}|${{github.repository}}>`
             }]
           }
       env:
