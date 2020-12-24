@@ -18,8 +18,9 @@ jobs:
         custom_payload: |
           {
             attachments: [{
+              title: 'Result'
               color: 'good',
-              text: `Branch ${{github.ref}} has been deployed.`
+              text: `Branch ${{github.ref}} has been deployed. ${{ env.GITHUB_REF }}`
             }]
           }
       env:
