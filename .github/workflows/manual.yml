@@ -19,6 +19,7 @@ jobs:
         path: ./context.txt
 
   show-context:
+    needs: dump-context
     runs-on: ubuntu-latest
 
     steps:
