@@ -1,32 +1,55 @@
 name: Manual workflow
 
-on: workflow_dispatch # push
+on: push # workflow_dispatch
 
 jobs:
-  greet:
+  dump-context:
     runs-on: ubuntu-latest
 
     steps:
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"      
+      run: echo "$GITHUB_CONTEXT" > ./context.txt
 
-    - name: Slack
-      uses: 8398a7/action-slack@v3
+    - name: Save context info
+      uses: actions/upload-artifact@v2
       with:
-        status: custom
-        fields: repo,job,commit,ref
-        custom_payload: |
-          {
-            username: '${{github.actor}}',
-            icon_emoji: ':recycle:',
-            attachments: [{
-              color: 'good',
-              text: `Staging env is updated with ${{github.ref}} by ${{github.actor}}\nvia ${{github.workflow}} in <${{github.event.repository.url}}|${{github.repository}}>`
-            }]
-          }
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        BRANCH_NAME: ${GITHUB_REF##*/}
-      if: always()  
+        name: context-info
+        path: ./context.txt
+
+  show-context:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Dump GitHub context
+      uses: actions/download-artifact@v2
+      with:
+        name: context-info
+
+    - name: Show context info
+      run: cat context.txt
+
+    # - name: Delete artifact
+    #   uses: geekyeggo/delete-artifact@v1
+    #   with:
+    #     name: context-info
+
+    # - name: Slack
+    #   uses: 8398a7/action-slack@v3
+    #   with:
+    #     status: custom
+    #     fields: repo,job,commit,ref
+    #     custom_payload: |
+    #       {
+    #         username: '${{github.actor}}',
+    #         icon_emoji: ':recycle:',
+    #         attachments: [{
+    #           color: 'good',
+    #           text: `Staging env is updated with ${{github.ref}} by ${{github.actor}}\nvia ${{github.workflow}} in <${{github.event.repository.url}}|${{github.repository}}>`
+    #         }]
+    #       }
+    #   env:
+    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    #     BRANCH_NAME: ${GITHUB_REF##*/}
+    #   if: always()
