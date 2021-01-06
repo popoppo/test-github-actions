@@ -8,18 +8,9 @@ on: # push # workflow_dispatch
     types: [closed]
 
 jobs:
-  check-if-pr-merged:
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == false
-    steps:
-      - name: Make state failure
-        run: |
-          echo "Pull request was closed but not merged"
-          exit 1
-
   dump-context:
     runs-on: ubuntu-latest
-
+    if: github.event.pull_request.merged == true
     steps:
     - name: Dump GitHub context
       env:
