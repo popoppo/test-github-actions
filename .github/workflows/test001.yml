@@ -6,11 +6,9 @@ jobs:
   dump-context:
     runs-on: ubuntu-latest
     steps:
-    - name: Echo actor
-      id: actor-name
-      run: echo "::set-output name=actor::$(echo $GITHUB_CONTEXT | grep actor)"
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
+    - name: Echo version
+      id: version
+      run: echo "::set-output name=v::$(echo \"1.2.3\" | sed -r 's/([0-9]+\.[0-9]+\.[0-9]+)-SNAPSHOT/\1/'"
 
     - name: Print actor name
-      run: echo "${{ steps.actor-name.outputs.actor }}"
+      run: echo "${{ steps.version.outputs.v }}"
