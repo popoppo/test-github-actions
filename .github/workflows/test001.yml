@@ -8,7 +8,7 @@ jobs:
     steps:
     - name: Echo version
       id: version
-      run: echo "::set-output name=v::$(echo \"1.2.3\" | sed -r 's/\"([0-9]+\.[0-9]+\.[0-9]+)-SNAPSHOT\"/\1/')"
+      run: echo "::set-output name=v::$(echo \"1.2.3-SNAPSHOT\" | sed -r 's/\"([0-9]+\.[0-9]+\.[0-9]+)-SNAPSHOT\"/\1/')"
 
     - name: Print version
       run: echo "${{ steps.version.outputs.v }}"
