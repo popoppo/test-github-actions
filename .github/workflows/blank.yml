@@ -28,10 +28,10 @@ jobs:
           lein change version leiningen.release/bump-version release
           lein vcs commit
           lein vcs push
-          git pull --rebase
+          git log --pretty=oneline -5
           git fetch origin dev
           git checkout dev
-          git pull --rebase
+          git log --pretty=oneline -5
           git rebase master
           lein change version leiningen.release/bump-version
           lein vcs commit
