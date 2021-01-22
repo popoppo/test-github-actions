@@ -1,27 +1,35 @@
-name: CI
+name: rebase
 
-# Controls when the action will run. 
-on: push
+on: # push
+  pull_request:
+    branches:
+      - master
+    types: [closed]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+    if: github.event.pull_request.merged == true
+
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
           ref: master
-          token: "invalid_token"
 
-      - name: Push to master
+      - uses: DeLaGuardo/setup-clojure@master
+        with:
+          lein: '2.9.1'
+
+      - name: Update master and develop
         run: |
-          echo "a" >> sample.txt
           git config user.email "popoppo39@gmail.com"
           git config user.name ${{ github.actor }}
-          git commit -am "Hello!!"
-          git push
+          lein change version leiningen.release/bump-version release
+          lein vcs commit
+          git fetch origin develop
+          git checkout develop
+          git rebase master
+          lein change version leiningen.release/bump-version
+          lein vcs commit
+          cat project.clj
