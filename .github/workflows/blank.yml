@@ -29,6 +29,8 @@ jobs:
           lein vcs commit
           git fetch origin dev
           git checkout dev
+          git branch -a
+          git diff master
           git rebase master
           lein change version leiningen.release/bump-version
           lein vcs commit
