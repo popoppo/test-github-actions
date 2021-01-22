@@ -21,14 +21,14 @@ jobs:
         with:
           lein: '2.9.1'
 
-      - name: Update master and develop
+      - name: Update master and dev
         run: |
           git config user.email "popoppo39@gmail.com"
           git config user.name ${{ github.actor }}
           lein change version leiningen.release/bump-version release
           lein vcs commit
-          git fetch origin develop
-          git checkout develop
+          git fetch origin dev
+          git checkout dev
           git rebase master
           lein change version leiningen.release/bump-version
           lein vcs commit
