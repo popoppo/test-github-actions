@@ -32,6 +32,7 @@ jobs:
           git fetch origin dev
           git checkout dev
           git log --pretty=oneline -5
+          git pull origin develop
           git rebase master
           lein change version leiningen.release/bump-version
           lein vcs commit
