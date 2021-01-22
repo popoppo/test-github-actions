@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: master
-          fetch-depth: 0
+#          fetch-depth: 0
 
       - uses: DeLaGuardo/setup-clojure@master
         with:
@@ -34,8 +34,6 @@ jobs:
           git log --pretty=oneline -5
           git fetch origin dev
           git checkout dev
-          git log --pretty=oneline -5
-          git pull origin dev
           git rebase master
           lein change version leiningen.release/bump-version
           lein vcs commit
