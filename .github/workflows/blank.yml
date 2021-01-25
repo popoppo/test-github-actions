@@ -1,4 +1,4 @@
-name: rebase
+name: Release
 
 on:
   pull_request:
@@ -25,6 +25,7 @@ jobs:
         run: |
           git config user.email "popoppo39@gmail.com"
           git config user.name ${{ github.actor }}
+          # --no-rebase is default but added to squelch warning
           git pull origin master --no-rebase --unshallow
           lein change version leiningen.release/bump-version release
           lein vcs commit
