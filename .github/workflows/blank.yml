@@ -28,6 +28,7 @@ jobs:
           git pull origin master --no-rebase --unshallow
           lein change version leiningen.release/bump-version release
           lein vcs commit
+          lein vcs tag --no-sign
           lein vcs push
           git fetch origin dev
           git checkout dev
