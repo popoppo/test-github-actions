@@ -1,4 +1,4 @@
-(defproject hello "0.11.7"
+(defproject hello "0.11.8-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
