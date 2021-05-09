@@ -1,1 +1,1 @@
-Sandbox for GitHub Actions.
+Sandbox for GitHub Actions and anything else.
